@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chatterbox</groupId>
-    <artifactId>chatterbox-user-service</artifactId>
+    <artifactId>chatterbox-follower-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ChatterBox User Service</name>
-    <description>User management microservice for ChatterBox platform</description>
+    <name>ChatterBox Follower Service</name>
+    <description>Follower management microservice for ChatterBox platform</description>
     <packaging>jar</packaging>
 
     <properties>

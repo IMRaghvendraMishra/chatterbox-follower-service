@@ -1,6 +1,6 @@
 server:
-  port: 8081
+  port: 8085
 
 spring:
   application:
-    name: chatterbox-user-service
+    name: chatterbox-follower-service
