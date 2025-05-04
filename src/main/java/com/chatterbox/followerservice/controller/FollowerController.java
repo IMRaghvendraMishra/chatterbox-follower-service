@@ -43,4 +43,10 @@ public class FollowerController {
     public List<String> getFollowing(@PathVariable String userId) {
         return followerService.getFollowing(userId);
     }
+
+    @GetMapping("/getAllKeys")
+    public void getAllRedisValues()
+    {
+        followerService.getAllRedisValues();
+    }
 }
