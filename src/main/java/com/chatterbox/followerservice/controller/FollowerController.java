@@ -1,5 +1,6 @@
 package com.chatterbox.followerservice.controller;
 
+import com.chatterbox.followerservice.kafka.FollowEventProducer;
 import com.chatterbox.followerservice.model.FollowRequest;
 import com.chatterbox.followerservice.service.FollowerService;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,12 @@ import java.util.List;
 public class FollowerController {
 
     @Autowired private FollowerService followerService;
+    @Autowired private FollowEventProducer followEventProducer;
 
     @PostMapping("/follow")
     public String followUser(@RequestBody FollowRequest request) {
         followerService.followUser(request.getFollowerId(), request.getFolloweeId());
+        followEventProducer.sendPostCreatedEvent(request); // Send event to Kafka topic
         return "Followed successfully";
     }
 

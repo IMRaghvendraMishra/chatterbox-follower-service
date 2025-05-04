@@ -5,6 +5,12 @@ server:
 spring:
   application:
     name: chatterbox-follower-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    follow-events-topic-name: chatterbox-follow-events
   redis:
     host: localhost
     port: 6379
