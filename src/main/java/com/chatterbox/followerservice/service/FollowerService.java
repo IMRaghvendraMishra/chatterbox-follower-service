@@ -1,5 +1,7 @@
 package com.chatterbox.followerservice.service;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,25 +15,26 @@ import java.util.Set;
 @Service
 public class FollowerService {
 
-    private final Map<String, Set<String>> followersMap = new HashMap<>();
-    private final Map<String, Set<String>> followingMap = new HashMap<>();
+    @Autowired
+    private RedisStorageService storage;
 
     public void followUser(String followerId, String followeeId) {
-        followersMap.computeIfAbsent(followeeId, k -> getDummyFollowers()).add(followerId);
-        followingMap.computeIfAbsent(followerId, k -> getDummyFollowing()).add(followeeId);
+        storage.follow(followerId,followeeId);
+
     }
 
     public void unfollowUser(String followerId, String followeeId) {
-        followersMap.getOrDefault(followeeId, getDummyFollowers()).remove(followerId);
-        followingMap.getOrDefault(followerId, getDummyFollowing()).remove(followeeId);
+        storage.unfollow(followerId,followeeId);
     }
 
     public List<String> getFollowers(String userId) {
-        return new ArrayList<>(followersMap.getOrDefault(userId, getDummyFollowers()));
+        return storage.getFollowers(userId).stream().toList();
+        //return new ArrayList<>(followersMap.getOrDefault(userId, getDummyFollowers()));
     }
 
     public List<String> getFollowing(String userId) {
-        return new ArrayList<>(followingMap.getOrDefault(userId, getDummyFollowing()));
+        return storage.getFollowing(userId).stream().toList();
+        //return new ArrayList<>(followingMap.getOrDefault(userId, getDummyFollowing()));
     }
 
     private Set<String> getDummyFollowers() {
@@ -41,4 +44,10 @@ public class FollowerService {
     private Set<String> getDummyFollowing() {
         return new HashSet<>(Arrays.asList("following1", "following2", "following3"));
     }
+
+    public void getAllRedisValues()
+    {
+        storage.printAllKeysAndValues();
+    }
+
 }
