@@ -37,7 +37,7 @@ public class RedisStorageService {
     }
 
     public Set<String> getFollowers(String userId) {
-        log.info("redisobject={}", redisTemplate.opsForSet().toString());
+        log.info("redis object={}", redisTemplate.opsForSet().toString());
         return redisTemplate.opsForSet().members(followersKey(userId));
     }
 
