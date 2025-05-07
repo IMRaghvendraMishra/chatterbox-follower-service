@@ -1,28 +1,26 @@
-package com.chatterbox.followerservice.repository;
+package com.chatterbox.followerservice.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-@Service
-@AllArgsConstructor
+@Repository
 @Log4j2
-public class FollowerRedisRepository {
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+@RequiredArgsConstructor
+public class FollowerRedisService {
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     private String followingKey(String userId) {
-        log.info("user:{}:following", userId);
         return "user:" + userId + ":following";
     }
 
     private String followersKey(String userId) {
-        log.info("user:{}:followers", userId);
         return "user:" + userId + ":followers";
     }
 
@@ -37,7 +35,6 @@ public class FollowerRedisRepository {
     }
 
     public Set<String> getFollowers(String userId) {
-        log.info("redis object={}", redisTemplate.opsForSet().toString());
         return redisTemplate.opsForSet().members(followersKey(userId));
     }
 
@@ -45,22 +42,19 @@ public class FollowerRedisRepository {
         return redisTemplate.opsForSet().members(followingKey(userId));
     }
 
-
-    public void printAllKeysAndValues() {
+    // Dev-only debugging method
+    public Map<String, Set<String>> getAllData() {
+        Map<String, Set<String>> allData = new HashMap<>();
         Set<String> keys = redisTemplate.keys("*");
-
-        if (keys == null || keys.isEmpty()) {
-            log.info("No keys found in Redis.");
-            return;
+        if (keys.isEmpty()) {
+            log.info("No keys found in Follower redis database.");
+            return null;
         }
-
-        for (String key : keys) {
-            DataType type = redisTemplate.type(key);
-
-            log.info("Key: {}", key);
+        keys.forEach(key -> {
             Set<String> members = redisTemplate.opsForSet().members(key);
-            log.info("  Members: {}", members);
-        }
+            log.info("Key: {}, Members: {}", key, members);
+            allData.put(key, members);
+        });
+        return allData;
     }
-
 }

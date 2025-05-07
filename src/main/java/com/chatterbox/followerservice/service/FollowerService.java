@@ -1,17 +1,18 @@
 package com.chatterbox.followerservice.service;
 
-import com.chatterbox.followerservice.repository.FollowerRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class FollowerService {
 
-    private final FollowerRedisRepository redisStorageService;
+    private final FollowerRedisService redisStorageService;
 
     public void followUser(String followerId, String followeeId) {
         redisStorageService.follow(followerId, followeeId);
@@ -29,7 +30,7 @@ public class FollowerService {
         return new ArrayList<>(redisStorageService.getFollowing(userId));
     }
 
-    public void getAllRedisValues() {
-        redisStorageService.printAllKeysAndValues();
+    public Map<String, Set<String>> getAllRedisValues() {
+        return redisStorageService.getAllData();
     }
 }
