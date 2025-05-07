@@ -76,8 +76,8 @@ follower-service:
 
 ### Follow/Unfollow
 
-* `POST /api/follower/follow` — Body: `{ followerId, followeeId }`
-* `POST /api/follower/unfollow` — Body: `{ followerId, followeeId }`
+* `POST /api/follower/follow` — Body: `{ followerUsername, followeeUsername }`
+* `POST /api/follower/unfollow` — Body: `{ followerUsername, followeeUsername }`
 
 ### Fetch Follow Data
 
@@ -110,7 +110,7 @@ follower-service:
    ```bash
    curl -X POST http://localhost:9095/api/follower/follow \
      -H "Content-Type: application/json" \
-     -d '{"followerId": "user1", "followeeId": "user2"}'
+     -d '{"followerUsername": "user1", "followeeUsername": "user2"}'
    ```
 
 ---
