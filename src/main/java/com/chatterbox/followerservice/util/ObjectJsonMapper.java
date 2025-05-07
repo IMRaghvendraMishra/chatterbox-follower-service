@@ -1,5 +1,6 @@
 package com.chatterbox.followerservice.util;
 
+import com.chatterbox.followerservice.dto.Post;
 import com.chatterbox.followerservice.dto.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +32,15 @@ public class ObjectJsonMapper {
             return objectMapper.readValue(json, User.class);
         } catch (JsonProcessingException e) {
             log.error("Unable to parse JSON to User object", e);
+            return null;
+        }
+    }
+
+    public Post jsonToPost(String json) {
+        try {
+            return objectMapper.readValue(json, Post.class);
+        } catch (JsonProcessingException e) {
+            log.error("Unable to parse JSON to Post object", e);
             return null;
         }
     }
