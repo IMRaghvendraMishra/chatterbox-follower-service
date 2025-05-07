@@ -11,6 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * This class listen to new post events and send notification to all followers of the person who posted
+ * - Listen to new post
+ * - Get follower list of the post.username
+ * - Send new post notification to all the followers via NotificationEventProducer
+ */
 @Service
 @Log4j2
 @AllArgsConstructor
@@ -34,8 +40,8 @@ public class PostEventConsumer {
                 followers -> {
                     followers.forEach(username -> notificationEventProducer.sendNotificationEvent(
                             username,
-                            "Hi " + username + ", there is new post from " + post.username() + "with content "
-                            + post.username()
+                            "Hi " + username + ", there is new post from " + post.username() + "with content : "
+                            + post.content()
                     ));
                 }
         );

@@ -15,7 +15,7 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    follow-events-topic-name: chatterbox-follow-events
+    #follow-events-topic-name: chatterbox-follow-events
     post-events-topic-name: chatterbox-post-events
     notification-events-topic-name: chatterbox-notification-events
   redis:

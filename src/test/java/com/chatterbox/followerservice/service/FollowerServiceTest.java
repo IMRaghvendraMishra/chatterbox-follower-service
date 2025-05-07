@@ -1,6 +1,6 @@
 package com.chatterbox.followerservice.service;
 
-import com.chatterbox.followerservice.messaging.FollowerEventProducer;
+import com.chatterbox.followerservice.messaging.NotificationEventProducer;
 import com.chatterbox.followerservice.storage.RedisStorageService;
 import com.chatterbox.followerservice.util.ObjectJsonMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,19 +10,22 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 class FollowerServiceTest {
 
     private RedisStorageService redisStorageService;
-    private FollowerEventProducer eventProducer;
+    private NotificationEventProducer eventProducer;
     private ObjectJsonMapper mapper;
     private FollowerService followerService;
 
     @BeforeEach
     void setUp() {
         redisStorageService = mock(RedisStorageService.class);
-        eventProducer = mock(FollowerEventProducer.class);
+        eventProducer = mock(NotificationEventProducer.class);
         mapper = mock(ObjectJsonMapper.class);
         followerService = new FollowerService(redisStorageService, eventProducer, mapper);
     }
@@ -36,7 +39,8 @@ class FollowerServiceTest {
 
         verify(redisStorageService).addFollower(followee, follower);
         verify(redisStorageService).addFollowing(follower, followee);
-        verify(eventProducer).sendFollowEvent(follower, followee);
+        verify(eventProducer).sendNotificationEvent(followee,
+                String.format("Hi %s, %s started following you", followee, follower));
     }
 
     @Test

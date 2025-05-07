@@ -1,6 +1,6 @@
 package com.chatterbox.followerservice.service;
 
-import com.chatterbox.followerservice.messaging.FollowerEventProducer;
+import com.chatterbox.followerservice.messaging.NotificationEventProducer;
 import com.chatterbox.followerservice.storage.RedisStorageService;
 import com.chatterbox.followerservice.util.ObjectJsonMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,14 @@ import java.util.Set;
 public class FollowerService {
 
     private final RedisStorageService redisStorageService;
-    private final FollowerEventProducer followerEventProducer;
+    private final NotificationEventProducer notificationEventProducer;
     private final ObjectJsonMapper objectJsonMapper;
 
     public void follow(String followerUsername, String followeeUsername) {
         redisStorageService.addFollower(followeeUsername, followerUsername);
         redisStorageService.addFollowing(followerUsername, followeeUsername);
-        followerEventProducer.sendFollowEvent(followerUsername, followeeUsername);
+        notificationEventProducer.sendNotificationEvent(followeeUsername,
+                String.format("Hi %s, %s started following you", followeeUsername, followerUsername));
         log.info("User {} followed {}", followerUsername, followeeUsername);
     }
 
