@@ -1,10 +1,10 @@
 package com.chatterbox.followerservice.connector;
 
 import com.chatterbox.followerservice.exception.InvalidUserException;
-import com.chatterbox.followerservice.mapper.ObjectJsonMapper;
-import com.chatterbox.followerservice.model.User;
+import com.chatterbox.followerservice.dto.User;
+import com.chatterbox.followerservice.util.ObjectJsonMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -20,7 +20,7 @@ import java.time.Duration;
  */
 @Component
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class HttpClientConnector {
 
     @Value("${follower-service.connector.user-service.get-by-username-endpoint}")
