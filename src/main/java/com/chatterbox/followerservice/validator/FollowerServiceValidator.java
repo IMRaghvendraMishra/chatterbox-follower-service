@@ -4,13 +4,13 @@ import com.chatterbox.followerservice.connector.HttpClientConnector;
 import com.chatterbox.followerservice.exception.InvalidUserException;
 import com.chatterbox.followerservice.exception.MandatoryFieldException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
 @RequiredArgsConstructor
-@Log4j2
+@Slf4j
 public class FollowerServiceValidator {
 
     private final HttpClientConnector clientConnector;
