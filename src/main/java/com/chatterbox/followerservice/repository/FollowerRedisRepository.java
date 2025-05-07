@@ -1,4 +1,4 @@
-package com.chatterbox.followerservice.service;
+package com.chatterbox.followerservice.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +12,7 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 @Log4j2
-public class RedisStorageService {
+public class FollowerRedisRepository {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 

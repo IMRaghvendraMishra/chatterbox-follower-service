@@ -1,5 +1,6 @@
 package com.chatterbox.followerservice.service;
 
+import com.chatterbox.followerservice.repository.FollowerRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FollowerService {
 
-    private final RedisStorageService redisStorageService;
+    private final FollowerRedisRepository redisStorageService;
 
     public void followUser(String followerId, String followeeId) {
         redisStorageService.follow(followerId, followeeId);
