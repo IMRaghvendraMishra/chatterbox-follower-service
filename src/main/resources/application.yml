@@ -19,3 +19,8 @@ spring:
 logging:
   level:
     com.chatterbox.followerservice: INFO
+
+follower-service:
+  connector:
+    user-service:
+      get-by-username-endpoint: http://localhost:9091/api/users/username/
