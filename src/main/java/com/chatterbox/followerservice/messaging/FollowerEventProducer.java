@@ -18,7 +18,7 @@ public class FollowerEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectJsonMapper mapper;
     @Value("${spring.kafka.follow-events-topic-name}")
-    private String followEventsTopicName;
+    String followEventsTopicName;
 
     public void sendFollowEvent(String followerUsername, String followeeUsername) {
         var payload = mapper.toJson(new FollowEvent(followerUsername, followeeUsername));
