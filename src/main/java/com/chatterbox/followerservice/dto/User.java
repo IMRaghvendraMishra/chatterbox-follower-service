@@ -1,4 +1,4 @@
-package com.chatterbox.followerservice.model;
+package com.chatterbox.followerservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
