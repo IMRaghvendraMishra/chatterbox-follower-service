@@ -1,0 +1,24 @@
+apiVersion: apps/v1  # This tells Kubernetes that this is a "Deployment" for a version of your app.
+kind: Deployment     # We want to create a Deployment.
+
+metadata:
+  name: chatterbox-follower-service  # The name of your service.
+
+spec:
+  replicas: 1          # We want to run only 1 copy (or pod) of your microservice.
+
+  selector:
+    matchLabels:
+      app: chatterbox-follower-service  # It selects the pods with this label.
+
+  template:  # This describes the pod template.
+    metadata:
+      labels:
+        app: chatterbox-follower-service  # The label for identifying the pod.
+
+    spec:
+      containers:
+      - name: chatterbox-follower-service  # The name of the container.
+        image: divya376/chatterbox-follower-service:latest  # This tells Kubernetes to use the Docker image named "chatterbox-follower-service".
+        ports:
+        - containerPort: 8085  # Exposing port 8085 from the container.
